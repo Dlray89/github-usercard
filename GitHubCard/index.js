@@ -3,6 +3,16 @@
            https://api.github.com/users/<your name>
 */
 
+// Make a request for a user with a given ID
+axios.get('https://api.github.com/users/Dlray89').then( response => {
+const githubInfo =   console.log(response.data);
+return githubInfo;
+
+})
+.catch( error => {
+   console.log("the data didn't not come throug", error)
+ })
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -12,7 +22,9 @@
 
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
-*/
+*/      
+document.querySelector('body').appendChild(cardcreator())
+
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
@@ -46,7 +58,50 @@ const followersArray = [];
 
 */
 
-/* List of LS Instructors Github username's: 
+function cardcreator(datainfo) {
+  const newCard = document.createElement('div')
+  const newImage = document.createElement('img');
+  const newdetails = document.createElement('div');
+  const newname = document.createElement('h3');
+  const newUserName = document.createElement('p');
+  const location = document.createElement('p');
+  const newAdress = document.createElement('p');
+  const newFollows = document.createElement('p');
+  const newfolowing = document.createElement('p');
+  const newBio = document.createElement('p');
+
+//adding classes and src////////
+
+  newCard.classList.add('card');
+newdetails.classList.add('card-info');
+newname.classList.add('name');
+newUserName.classList.add('unsername');
+newImage.src = datainfo;
+newAdress.src = datainfo
+
+/////appending/////
+newCard.appendChild(newImage);
+newCard.appendChild(newdetails);
+newCard.appendChild(newname);
+newCard.appendChild(newUserName);
+newCard.appendChild(location);
+newCard.appendChild(newAdress);
+newCard.appendChild(newFollows);
+newCard.appendChild(newfolowing);
+newCard.appendChild(newBio);
+
+console.log(newCard)
+
+newCard.addEventListener('click', () => {
+  newCard.classList.toggle('selected')
+})
+
+return newCard
+}
+const entryPoint = document.querySelector('.header')
+console.log(entryPoint)
+
+/* List of LS Instructors Github username's:
   tetondan
   dustinmyers
   justsml
