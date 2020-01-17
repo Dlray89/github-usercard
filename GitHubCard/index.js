@@ -5,12 +5,13 @@
 
 // Make a request for a user with a given ID
 axios.get('https://api.github.com/users/Dlray89').then( response => {
-const githubInfo =   console.log(response.data);
-return githubInfo;
+// console.log(response.data);
+const grabGit = cardcreator(response.data);
+entryPoint.appendChild(grabGit)
 
 })
 .catch( error => {
-   console.log("the data didn't not come throug", error)
+   console.log("the data didn't not come through", error)
  })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -23,7 +24,6 @@ return githubInfo;
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */      
-document.querySelector('body').appendChild(cardcreator())
 
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
@@ -58,17 +58,18 @@ const followersArray = [];
 
 */
 
-function cardcreator(datainfo) {
+function cardcreator(data) {
   const newCard = document.createElement('div')
   const newImage = document.createElement('img');
   const newdetails = document.createElement('div');
   const newname = document.createElement('h3');
   const newUserName = document.createElement('p');
   const location = document.createElement('p');
-  const newAdress = document.createElement('p');
+  const newAddress = document.createElement('p');
   const newFollows = document.createElement('p');
   const newfolowing = document.createElement('p');
   const newBio = document.createElement('p');
+  const profile = document.createElement('p');
 
 //adding classes and src////////
 
@@ -76,19 +77,32 @@ function cardcreator(datainfo) {
 newdetails.classList.add('card-info');
 newname.classList.add('name');
 newUserName.classList.add('unsername');
-newImage.src = datainfo;
-newAdress.src = datainfo
+newImage.src = data.avatar_url;
+newAddress.href = data.html_url;
+
+//////////Text-content////////////
+
+newImage.src = `${data.avatar_url}`;
+newname.textContent = `${data.name}`;
+newUserName.textContent = `${data.login}`;
+location.textContent = `Location: ${data.location}`;
+newFollows.textContent = `Followers: ${data.followers}`
+newfolowing.textContent = `Following: ${data.following}`
+newBio.textContent = `Bio: ${data.bio}`
+
+
 
 /////appending/////
 newCard.appendChild(newImage);
 newCard.appendChild(newdetails);
-newCard.appendChild(newname);
-newCard.appendChild(newUserName);
-newCard.appendChild(location);
-newCard.appendChild(newAdress);
-newCard.appendChild(newFollows);
-newCard.appendChild(newfolowing);
-newCard.appendChild(newBio);
+newdetails.appendChild(newname);
+newdetails.appendChild(newUserName);
+newdetails.appendChild(location);
+newdetails.appendChild(newAddress);
+newdetails.appendChild(newFollows);
+newdetails.appendChild(newfolowing);
+newdetails.appendChild(newBio);
+newAddress.appendChild(profile)
 
 console.log(newCard)
 
@@ -98,7 +112,7 @@ newCard.addEventListener('click', () => {
 
 return newCard
 }
-const entryPoint = document.querySelector('.header')
+const entryPoint = document.querySelector('.cards')
 console.log(entryPoint)
 
 /* List of LS Instructors Github username's:
